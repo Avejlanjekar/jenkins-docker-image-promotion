@@ -2,7 +2,10 @@ pipeline{
     agent any
 
     environment{
-        DOCKER_IMAGE= 'avejlanjekar45/jenkins-docker-promotion'
+        DEV_DOCKER_IMAGE= 'avejlanjekar45/dev-docker-image'
+        QA_DOCKER_IMAGE= 'avejlanjekar45/qa-docker-image'
+        STAGE_DOCKER_IMAGE= 'avejlanjekar45/stage-docker-image'
+
         REGISTRY_URL= 'https://registry.hub.docker.com'
         CREDENTIALS= 'dockerhub-credentials'
     }
@@ -18,7 +21,7 @@ pipeline{
             steps{
                 script{
                     def app= docker.build(
-                        "${DOCKER_IMAGE}:${GIT_COMMIT}"
+                        "${DEV_DOCKER_IMAGE}:${GIT_COMMIT}"
                     )
 
                     docker.withRegistry(
